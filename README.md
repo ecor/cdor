@@ -57,7 +57,7 @@ ENDDATE_FUTURE="2017-05-31"
 >
 > 
 ```
-The R script used for the ENERGY MasterClass Excercise is `inst/examples/plotMaps.R`.
+The R script used for the ENERGY MasterClass Excercise is [`inst/examples/plotMaps.R`](https://github.com/ecor/nccdosmart/blob/master/inst/examples/plotMaps.R).
  
 
 

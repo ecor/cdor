@@ -7,7 +7,7 @@
 #
 #   https://www.dropbox.com/sh/u13azj7dj0d15j7/AAD7UQOynUTELqM-EGgkvsnwa?dl=0&s=sl
 #
-#   and put in a directory declared in INPUT_DATADIR
+#   and put in the directory declared in INPUT_DATADIR
 #
 INPUT_DATADIR <- Sys.getenv("HOME","Dropbox/public_/ncdosmart_data",sep="/") ## modify this value with the name of the directory containing the input file.  
 RCM_OROGRAPHY_FIX=paste(INPUT_DATADIR,"/rcm/orog_MED-11_ECMWF-ERAINT_evaluation_r1i1p1_CNRM-ALADIN52_v1_fx.nc",sep="/")                  

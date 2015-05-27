@@ -1,0 +1,2 @@
+# nccdosmart
+This package was created within the latest EUROPEAS "First Climate Services Masterclass: Energy, Tourism, Agriculture in a changing climate" (ENERGY group students' prototype)(http://www.euporias.eu) held in Bozen (South Tyrol, Italy), 18-22 May 2015.  It manipulates netCDF climate data files with external tools, like  'cdo' and interfaces with "raster" package for data import/export and analysis.

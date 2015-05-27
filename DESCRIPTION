@@ -1,0 +1,14 @@
+Package: nccdosmart
+Maintainer: Emanuele Cordano <emanuele.cordano@gmail.com>
+License: GPL (>= 3)
+Title: A set of R functions to manipulate climate data in netCDF format 
+Type: Package
+Author: Emanuele Cordano, Ildikó Pieczka, Isadora Jiménez
+Description: This package was created within the latest EUPORIAS "First Climate Services Masterclass: Energy, Tourism, Agriculture in a changing climate" (http://www.euporias.eu) held in Bozen (South Tyrol, Italy), 18-22 May 2015.  It manipulates netCDF climate data files with external tools, like  'cdo', and it interfaces with "raster" package for data import/export and analysis.
+Version: 0.1
+Date: 2015-02-21
+Repository: Github
+Depends:
+    raster,stringr
+Imports:
+    rgdal

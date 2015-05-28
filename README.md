@@ -38,7 +38,7 @@ An example of Configuration for input can be found by browsing in the `inst/conf
 #
 #   and put in the directory declared in INPUT_DATADIR
 #
-INPUT_DATADIR <- Sys.getenv("HOME","Dropbox/public_/ncdosmart_data",sep="/") ## modify this value with the name of the directory containing the input file.  
+INPUT_DATADIR <- paste(Sys.getenv("HOME"),"Dropbox/public_/ncdosmart_data",sep="/") ## modify this value with the name of the directory containing the input file.  
 RCM_OROGRAPHY_FIX=paste(INPUT_DATADIR,"/rcm/orog_MED-11_ECMWF-ERAINT_evaluation_r1i1p1_CNRM-ALADIN52_v1_fx.nc",sep="/")                  
 RCM_LANDSEAMASK_FIX=paste(INPUT_DATADIR,"rcm/sftlf_MED-11_ECMWF-ERAINT_evaluation_r1i1p1_CNRM-ALADIN52_v1_fx.nc",sep="/")                   
 RCM_GCM_PAST=paste(INPUT_DATADIR,"rcm/tas_MED-11_CNRM-CM5_historical_r8i1p1_CNRM-ALADIN52_v1_day_19960101-20001231.nc",sep="/")      

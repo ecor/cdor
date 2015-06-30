@@ -23,8 +23,15 @@ ENDDATE_PAST="1997-05-31"
 STARTDATE_FUTURE="2017-05-01"
 ENDDATE_FUTURE="2017-05-31"
 
-
-
+#
+#Information & detailed documentation of the data used for this exercise can be found at:
+#		
+#		For E-OBS (gridded observational dataset) the official information is at http://eca.knmi.nl/download/ensembles/download.php
+#
+#Regional climate model data examples are downloaded from https://www.medcordex.eu/ from where we have selected the 
+#regional climate model ALADIN (both reanalysis-driven and GCM-driven experiments), but feel free to choose from many more. Data from the MED-CORDEX project available on that server is provided without charge and may be used for research and education only. Commercial use of the data is not permitted.
+#
+#
 
 
 

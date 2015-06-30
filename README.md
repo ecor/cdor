@@ -61,6 +61,14 @@ The R script used for the ENERGY MasterClass Excercise is [`inst/examples/plotMa
 See also [`inst/examples/plotMaps.R`](https://github.com/ecor/nccdosmart/blob/master/inst/examples/plotMaps.R)
 and [`inst/examples/plotMaps_usingExtractMethod.R`](https://github.com/ecor/nccdosmart/blob/master/inst/examples/plotMaps_usingExtractMethod.R).
 
+## Details
+
+Information & detailed documentation of the data used for this exercise can be found at:
+
+For E-OBS (gridded observational dataset) the official information is at http://eca.knmi.nl/download/ensembles/download.php
+
+Regional climate model data examples are downloaded from https://www.medcordex.eu/ from where we have selected the 
+regional climate model ALADIN (both reanalysis-driven and GCM-driven experiments), but feel free to choose from many more. Data from the MED-CORDEX project available on that server is provided without charge and may be used for research and education only. Commercial use of the data is not permitted.
 
  
 

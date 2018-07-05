@@ -11,7 +11,7 @@ THe package can be installed within R by following the instruction above:
 
 > library(devtools)
 >
-> install_github("ecor/nccdosmart")
+> install_github("ecor/nccdosmart",ref="dev01")
 
 
 ```

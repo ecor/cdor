@@ -3,7 +3,7 @@
 # Author: ecor
 ###############################################################################
 NULL
-#' R Interface for 'cdo.seldate'
+#' R Interface for 'cdo.remapnn'
 #' 
 #' @param coarse_nc coarse input netcdf
 #' @param fine_nc fine  input netcdf
@@ -26,5 +26,6 @@ cdo.remapnn <-function(coarse_nc,fine_nc,outfile)  {
 	command <- paste("cdo remapnn,",coarse_nc," ",fine_nc," ",outfile,sep="")
 	message(command)
 	out <- system(command)
+	return(out)
 
 }

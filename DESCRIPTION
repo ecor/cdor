@@ -1,4 +1,4 @@
-Package: nccdosmart
+Package: cdor
 Maintainer: Emanuele Cordano <emanuele.cordano@gmail.com>
 License: GPL (>= 3)
 Title: A set of R functions to manipulate climate data in netCDF format
@@ -7,7 +7,7 @@ Author: Emanuele Cordano
 Description: It manipulates netCDF climate data files with 'cdo' external tools
     and it interfaces with "raster" package for data import/export and analysis.
 Version: 0.2
-Date: 2018-07-05
+Date: 2018-07-19
 Repository: Github
 Depends:
     raster,stringr

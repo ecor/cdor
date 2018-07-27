@@ -24,7 +24,7 @@ library(roxygen2)
 options(repos = c(CRAN="http://cran.r-project.org"))
 
 path <- '/STORAGE/projects/R-Packages' 
-pkg_name <- "nccdosmart"
+pkg_name <- "cdor"
 pkg_dir <- paste(path,pkg_name,sep="/")
 cran_pkg_path <- paste(path,"toCran",sep="/")
 cran_pkg_dir <- paste(cran_pkg_path,pkg_name,sep="/")

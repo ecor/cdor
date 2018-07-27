@@ -2,3 +2,4 @@
 
 export(cdo.remapnn)
 export(cdo.seldate)
+export(cdo.sellonlatbox)

@@ -21,17 +21,32 @@ NULL
 #' 
 #' @examples
 #' 
+#' 
+#' \dontrun{
+#' ### 
+#'  url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05/chirps-v2.0.2005.days_p05.nc"
+#'  temp <-- resterTmFile()
 #'  x <- '/H01/SHAREDWORK/ACEWATER2/data/db/climate/chirps/data/daily/netcdf_global/p05/chirps-v2.0.2005.days_p05.nc' 
 #'  y <- extent(c(-17.6608, -5.727799, 10.17488, 18.62197))
 #' 
+#' 
+#' 
 #' 	out <- cdo.sellonlatbox(x=x,y=y)
 #' 	out2 <- cdo.sellonlatbox(x=x,y=y,dim=c(2,2))
-#' 
-#' 
+#' 	map_path <-  '/STORAGE/projects/R-Packages/cdor/inst/map'
+#'  gadm <- getData('GADM',country='ITA',level=3,path=map_path)
+#'  gadm <- gadm[gadm$NAME_1 %in% c("Trentino-Alto Adige"),]
+#'  prec <- cdo.sellonlatbox(x=x,y=gadm)
+#'  
+#' library(RColorBrewer)
+#' library(rasterVis)
+#' cols <- colorRampPalette(brewer.pal(9,"YlGnBu"))
+#' levelplot(prec[[5]],col.regions=cols)+layer(sp.polygons(gadm))
+#' levelplot(sum(prec),col.regions=cols)+layer(sp.polygons(gadm))
+#' }
 
 
-
-cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.raster=TRUE)  {
+cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.raster=TRUE,parallel=FALSE,npar=NA)  {
 	
 	
 	
@@ -77,9 +92,19 @@ cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.r
 	  ysmax <- ysmax*scaley+offsety
 	  
 	  extents <- mapply(xmin=xsmin,xmax=xsmax,ymin=ysmin,ymax=ysmax,FUN=c,SIMPLIFY=FALSE)
-		
-	  out <- mapply(x=x,y=extents,dim=1,outdir=outdir,return.raster=return.raster,FUN=cdo.sellonlatbox,...,SIMPLIFY=FALSE)
 	  
+	  if (parallel==TRUE) {
+		  
+		  if (is.na(npar)) npar <- 1
+		  doParallel::registerDoParallel(npar)
+		  ## SPERIMENTARE 
+		  out <- foreach::foreach(extents) %dopar% {cdo.sellonlatbox(x=x,y=extents,dim=1,outdir=outdir,return.raster=return.raster,parallel=FALSE,...)}
+		  
+	  } else {
+	  		
+		
+	  		out <- mapply(x=x,y=extents,dim=1,outdir=outdir,return.raster=return.raster,FUN=cdo.sellonlatbox,...,SIMPLIFY=FALSE)
+  		}
 	  return(out)
 	
 	}

@@ -3,3 +3,7 @@
 export(cdo.remapnn)
 export(cdo.seldate)
 export(cdo.sellonlatbox)
+importFrom(raster,extent)
+importFrom(raster,stack)
+importFrom(stringr,str_replace)
+importFrom(stringr,str_replace_all)

@@ -5,7 +5,11 @@
 NULL
 #' R Interface for 'cdo.seldate'
 #' 
-#' @param x coarse input netcdf
+#' @param x input netcdf file for 'cdo.sellonlatbox'
+#' @param y extent or \code{Extent*} object indicateing the extent to extract
+#' @param outdir output directory
+#' @param return.raster logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-Class}} objects.
+#' 
 #' @param fine_nc fine  input netcdf
 #' @param outfile output netcdf 
 #' 
@@ -16,6 +20,9 @@ NULL
 #' @author Emanuele Cordano
 #' 
 #' @seealso \code{\link{system}}
+#' 
+#' @importFrom stringr str_replace str_replace_all
+#' @importFrom raster extent stack
 #' 
 #' @export
 #' 
@@ -29,7 +36,7 @@ NULL
 #' 
 #'  y <- extent(c(-17.6608, -5.727799, 10.17488, 18.62197))
 #' 
-#' 
+#' library(raster)
 #' 
 #' 	out <- cdo.sellonlatbox(x=x,y=y)
 #' 	out2 <- cdo.sellonlatbox(x=x,y=y,dim=c(2,2))
@@ -95,10 +102,20 @@ cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.r
 	  
 	  if (parallel==TRUE) {
 		  
-		  if (is.na(npar)) npar <- 1
-		  doParallel::registerDoParallel(npar)
+		  
+		 ## require("doParallel")
+		 ## require("foreach")
+		  npar_max <- min(detectCores(all.tests = FALSE, logical = TRUE)-1,dim[1]*dim[2])
+		  if (is.na(npar)) npar <- npar_max 
+		  if (npar>npar_max) npar <- npar_max 
+		  
+		 registerDoParallel(npar)
+		  print(extents)
 		  ## SPERIMENTARE 
-		  out <- foreach::foreach(extents) %dopar% {cdo.sellonlatbox(x=x,y=extents,dim=1,outdir=outdir,return.raster=return.raster,parallel=FALSE,...)}
+		  iextents <- 1:length(extents)
+		  print(iextents)
+		 #######extentss <<- extents
+		  out <- foreach(ii=iextents) %dopar% {cdo.sellonlatbox(x=x,y=extents[[ii]],dim=1,outdir=outdir,return.raster=return.raster,parallel=FALSE,...)}
 		  
 	  } else {
 	  		

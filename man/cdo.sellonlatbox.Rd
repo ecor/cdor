@@ -8,9 +8,15 @@ cdo.sellonlatbox(x, y, ..., dim = c(1, 1), outdir = NULL, outfile = NULL,
   return.raster = TRUE, parallel = FALSE, npar = NA)
 }
 \arguments{
-\item{x}{coarse input netcdf}
+\item{x}{input netcdf file for 'cdo.sellonlatbox'}
+
+\item{y}{extent or \code{Extent*} object indicateing the extent to extract}
+
+\item{outdir}{output directory}
 
 \item{outfile}{output netcdf}
+
+\item{return.raster}{logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-Class}} objects.}
 
 \item{fine_nc}{fine  input netcdf}
 }
@@ -24,13 +30,29 @@ See \url{http://www.fourtythree.org/tech/remapping-a-netcdf-file-using-cdo/},
 }
 \examples{
 
- x <- '/H01/SHAREDWORK/ACEWATER2/data/db/climate/chirps/data/daily/netcdf_global/p05/chirps-v2.0.2005.days_p05.nc' 
+
+\dontrun{
+### 
+ url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05/chirps-v2.0.2005.days_p05.nc"
+ temp <-- rasterTmFile()
+
  y <- extent(c(-17.6608, -5.727799, 10.17488, 18.62197))
+
+library(raster)
 
 	out <- cdo.sellonlatbox(x=x,y=y)
 	out2 <- cdo.sellonlatbox(x=x,y=y,dim=c(2,2))
-
-
+	map_path <-  '/STORAGE/projects/R-Packages/cdor/inst/map'
+ gadm <- getData('GADM',country='ITA',level=3,path=map_path)
+ gadm <- gadm[gadm$NAME_1 \%in\% c("Trentino-Alto Adige"),]
+ prec <- cdo.sellonlatbox(x=x,y=gadm)
+ 
+library(RColorBrewer)
+library(rasterVis)
+cols <- colorRampPalette(brewer.pal(9,"YlGnBu"))
+levelplot(prec[[5]],col.regions=cols)+layer(sp.polygons(gadm))
+levelplot(sum(prec),col.regions=cols)+layer(sp.polygons(gadm))
+}
 }
 \author{
 Emanuele Cordano

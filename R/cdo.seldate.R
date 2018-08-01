@@ -20,12 +20,12 @@ NULL
 #' @author Emanuele Cordano
 #' @export
 #' @examples
-#' 
+#'  \dontrun{
 #'  infile <- "/Users/ecor/workspace_eclipse/MASTERCLASS/EMC15ENERGY/data/e-obs/tg_0.25deg_reg_v11.0.nc4"
 #'  outfile <- "/Users/ecor/workspace_eclipse/MASTERCLASS/EMC15ENERGY/temp/test0.nc4" 
 #'  
 #'  ncs <- cdo.seldate(infile,outfile,start="1997-05-01",end="1997-05-31")
-
+#'  }
 
 cdo.seldate <-function(infile,outfile,start="1997-05-01",end="1997-05-31",...) {
 	

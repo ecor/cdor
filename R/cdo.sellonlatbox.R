@@ -30,13 +30,17 @@ NULL
 #' 
 #' 
 #' \dontrun{
-#' ### 
-#'  url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05/chirps-v2.0.2005.days_p05.nc"
-#'  temp <-- rasterTmFile()
+#'
+#' 	ncname <- chirps-v2.0.2005.days_p05.nc"
+#'  url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05"
+#'  temp <- rasterTmFile()
+#'  download.file(from=paste(url,ncname,sep="/"),to=temp)
+#'  x <- paste(temp,ncname,sep="/")
 #' 
-#'  y <- extent(c(-17.6608, -5.727799, 10.17488, 18.62197))
+#' 	DOWNLOAD.FILE
 #' 
-#' library(raster)
+#' 
+#' 	library(raster)
 #' 
 #' 	out <- cdo.sellonlatbox(x=x,y=y)
 #' 	out2 <- cdo.sellonlatbox(x=x,y=y,dim=c(2,2))
@@ -50,10 +54,19 @@ NULL
 #' cols <- colorRampPalette(brewer.pal(9,"YlGnBu"))
 #' levelplot(prec[[5]],col.regions=cols)+layer(sp.polygons(gadm))
 #' levelplot(sum(prec),col.regions=cols)+layer(sp.polygons(gadm))
+#' 
+#' 
+#' ### Africa Extent: extent      : -18.1625, 54.5375, -34.8375, 37.5625  (xmin, xmax, ymin, ymax)
+#' ###y <- extent(c(-17.6608, -5.727799, 10.17488, 18.62197)) ## Extent senegal
+#'  y <- extent(c(-18.1625,54.5375,-34.8375,37.5625))
+#' 
+#'  prec_afr <- cdo.sellonlatbox(x=x,y=y,dim=c(10,10),parallel=TRUE)	
+#' 
+#' 
 #' }
 
 
-cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.raster=TRUE,parallel=FALSE,npar=NA)  {
+cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.raster=TRUE,parallel=FALSE,npar=NA,use.distbase=FALSE)  {
 	
 	
 	

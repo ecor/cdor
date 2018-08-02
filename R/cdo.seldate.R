@@ -21,20 +21,57 @@ NULL
 #' @export
 #' @examples
 #'  \dontrun{
-#'  infile <- "/Users/ecor/workspace_eclipse/MASTERCLASS/EMC15ENERGY/data/e-obs/tg_0.25deg_reg_v11.0.nc4"
-#'  outfile <- "/Users/ecor/workspace_eclipse/MASTERCLASS/EMC15ENERGY/temp/test0.nc4" 
+#' 
+#' 	ncname <- chirps-v2.0.2005.days_p05.nc"
+#'  url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05"
+#'  temp <- rasterTmFile()
+#'  download.file(from=paste(url,ncname,sep="/"),to=temp)
+#'  x <- paste(temp,ncname,sep="/")
+#'  infile <- x
+#'  outfile <- NA
 #'  
 #'  ncs <- cdo.seldate(infile,outfile,start="1997-05-01",end="1997-05-31")
 #'  }
 
-cdo.seldate <-function(infile,outfile,start="1997-05-01",end="1997-05-31",...) {
+cdo.seldate <-function(infile,outfile=NULL,start="1997-05-01",end="1997-05-31",return.raster=TRUE,...) {
 	
 	
+	if (is.null(outfile)) outfile <- NA
+	format ="%Y-%m-%d"
+	start <- as.Date(start,format=format)
+	end <- as.Date(end,format=format)
 	
-
-	command <- paste("cdo seldate,",start,",",end," ",infile,"  ",outfile,sep="")
+	
+	startc <- as.character(start)
+	if (is.na(outfile)) outfile <- "default"
+	if  (outfile=="default")  {
+		formats <- "%Y_%m_%d"
+		starts <- as.character(start,format=formats)
+		starts <- as.character(end,format=formats)
+		suffix <- sprintf("_%s_%s.nc",starts,ends)
+		outfile <- str_replace(infile,".nc",suffix)
+		
+		
+	}
+	
+	if (outfile=="temp") outfile <- paste(tempfile(),".nc")
+	
+	command <- paste("cdo seldate,",as.character(start),",",end," ",infile,"  ",outfile,sep="")
 	print(command)
 	out <- system(command)
+	
+	if (out==0) {
+		
+		if (return.raster==TRUE) {
+			
+			
+			out <- stack(outfile)
+			
+		} else {
+			
+			out <- outfile
+		}
+	}
 	
 	return(out)
 	

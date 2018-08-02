@@ -5,7 +5,8 @@
 \title{R Interface for 'cdo.seldate'}
 \usage{
 cdo.sellonlatbox(x, y, ..., dim = c(1, 1), outdir = NULL, outfile = NULL,
-  return.raster = TRUE, parallel = FALSE, npar = NA)
+  return.raster = TRUE, parallel = FALSE, npar = NA,
+  use.distbase = FALSE)
 }
 \arguments{
 \item{x}{input netcdf file for 'cdo.sellonlatbox'}
@@ -27,32 +28,6 @@ R Interface for 'cdo.seldate'
 This function calls \code{cdo remapnn}. 
 See \url{http://www.fourtythree.org/tech/remapping-a-netcdf-file-using-cdo/},
 \url{https://code.zmaw.de/projects/cdo/embedded/1.4.7/cdo.html}
-}
-\examples{
-
-
-\dontrun{
-### 
- url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05/chirps-v2.0.2005.days_p05.nc"
- temp <-- rasterTmFile()
-
- y <- extent(c(-17.6608, -5.727799, 10.17488, 18.62197))
-
-library(raster)
-
-	out <- cdo.sellonlatbox(x=x,y=y)
-	out2 <- cdo.sellonlatbox(x=x,y=y,dim=c(2,2))
-	map_path <-  '/STORAGE/projects/R-Packages/cdor/inst/map'
- gadm <- getData('GADM',country='ITA',level=3,path=map_path)
- gadm <- gadm[gadm$NAME_1 \%in\% c("Trentino-Alto Adige"),]
- prec <- cdo.sellonlatbox(x=x,y=gadm)
- 
-library(RColorBrewer)
-library(rasterVis)
-cols <- colorRampPalette(brewer.pal(9,"YlGnBu"))
-levelplot(prec[[5]],col.regions=cols)+layer(sp.polygons(gadm))
-levelplot(sum(prec),col.regions=cols)+layer(sp.polygons(gadm))
-}
 }
 \author{
 Emanuele Cordano

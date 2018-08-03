@@ -6,8 +6,8 @@ Type: Package
 Author: Emanuele Cordano
 Description: It manipulates netCDF climate data files with 'cdo' external tools
     and it interfaces with "raster" package for data import/export and analysis.
-Version: 0.3
-Date: 2018-08-02
+Version: 0.3.1
+Date: 2018-08-03
 Repository: Github
 Depends:
     raster,stringr

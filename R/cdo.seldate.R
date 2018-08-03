@@ -20,9 +20,11 @@ NULL
 #' @author Emanuele Cordano
 #' @export
 #' @examples
+#'  ##
+#' 
 #'  \dontrun{
 #' 
-#' 	ncname <- chirps-v2.0.2005.days_p05.nc"
+#' 	ncname <- "chirps-v2.0.2005.days_p05.nc"
 #'  url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05"
 #'  temp <- rasterTmFile()
 #'  download.file(from=paste(url,ncname,sep="/"),to=temp)

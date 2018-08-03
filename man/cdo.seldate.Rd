@@ -24,6 +24,22 @@ This function calls \code{cdo seldate}.
 See \url{http://www.fourtythree.org/tech/remapping-a-netcdf-file-using-cdo/},
 \url{https://code.zmaw.de/projects/cdo/embedded/1.4.7/cdo.html}
 }
+\examples{
+ ##
+
+ \dontrun{
+
+	ncname <- "chirps-v2.0.2005.days_p05.nc"
+ url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05"
+ temp <- rasterTmFile()
+ download.file(from=paste(url,ncname,sep="/"),to=temp)
+ x <- paste(temp,ncname,sep="/")
+ infile <- x
+ outfile <- NA
+ 
+ ncs <- cdo.seldate(infile,outfile,start="1997-05-01",end="1997-05-31")
+ }
+}
 \author{
 Emanuele Cordano
 }

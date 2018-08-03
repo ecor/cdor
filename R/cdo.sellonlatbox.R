@@ -3,7 +3,7 @@
 # Author: ecor
 ###############################################################################
 NULL
-#' R Interface for 'cdo.seldate'
+#' R Interface for 'cdo.sellonlatbox'
 #' 
 #' @param x input netcdf file for 'cdo.sellonlatbox'
 #' @param y extent or \code{Extent*} object indicateing the extent to extract
@@ -31,9 +31,9 @@ NULL
 #' 
 #' \dontrun{
 #'
-#' 	ncname <- chirps-v2.0.2005.days_p05.nc"
+#' 	ncname <- "chirps-v2.0.2005.days_p05.nc"
 #'  url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05"
-#'  temp <- rasterTmFile()
+#'  temp <- rasterTmpFile()
 #'  download.file(from=paste(url,ncname,sep="/"),to=temp)
 #'  x <- paste(temp,ncname,sep="/")
 #' 
@@ -66,7 +66,7 @@ NULL
 #' }
 
 
-cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.raster=TRUE,parallel=FALSE,npar=NA,use.distbase=FALSE)  {
+cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.raster=TRUE,parallel=FALSE,npar=NA)  {
 	
 	
 	
@@ -89,10 +89,14 @@ cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.r
 		} 
 	
 	######
+	
+	
+	
 	if (length(dim)<2) dim <- c(1,1)
 	
 	if (any(dim!=c(1,1))) {
 	
+		
 	  ysmax <- rep(1:dim[1],times=dim[2])
 	  xsmax <- rep(1:dim[2],each=dim[1])
 	  
@@ -176,6 +180,8 @@ cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.r
 	out <- system(cdostring)
 	
 	
+	
+	
 	if (out==0) {
 		
 		if (return.raster==TRUE) {
@@ -187,9 +193,6 @@ cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.r
 			
 			out <- outfile
 		}
-		
-		
-		
 		
 	}
 ###	cdo remapnn,$COARSE $FINE $OUTPUT 

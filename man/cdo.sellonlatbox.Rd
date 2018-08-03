@@ -2,11 +2,10 @@
 % Please edit documentation in R/cdo.sellonlatbox.R
 \name{cdo.sellonlatbox}
 \alias{cdo.sellonlatbox}
-\title{R Interface for 'cdo.seldate'}
+\title{R Interface for 'cdo.sellonlatbox'}
 \usage{
 cdo.sellonlatbox(x, y, ..., dim = c(1, 1), outdir = NULL, outfile = NULL,
-  return.raster = TRUE, parallel = FALSE, npar = NA,
-  use.distbase = FALSE)
+  return.raster = TRUE, parallel = FALSE, npar = NA)
 }
 \arguments{
 \item{x}{input netcdf file for 'cdo.sellonlatbox'}
@@ -22,12 +21,51 @@ cdo.sellonlatbox(x, y, ..., dim = c(1, 1), outdir = NULL, outfile = NULL,
 \item{fine_nc}{fine  input netcdf}
 }
 \description{
-R Interface for 'cdo.seldate'
+R Interface for 'cdo.sellonlatbox'
 }
 \note{
 This function calls \code{cdo remapnn}. 
 See \url{http://www.fourtythree.org/tech/remapping-a-netcdf-file-using-cdo/},
 \url{https://code.zmaw.de/projects/cdo/embedded/1.4.7/cdo.html}
+}
+\examples{
+
+
+\dontrun{
+
+	ncname <- "chirps-v2.0.2005.days_p05.nc"
+ url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05"
+ temp <- rasterTmFile()
+ download.file(from=paste(url,ncname,sep="/"),to=temp)
+ x <- paste(temp,ncname,sep="/")
+
+	DOWNLOAD.FILE
+
+
+	library(raster)
+
+	out <- cdo.sellonlatbox(x=x,y=y)
+	out2 <- cdo.sellonlatbox(x=x,y=y,dim=c(2,2))
+	map_path <-  '/STORAGE/projects/R-Packages/cdor/inst/map'
+ gadm <- getData('GADM',country='ITA',level=3,path=map_path)
+ gadm <- gadm[gadm$NAME_1 \%in\% c("Trentino-Alto Adige"),]
+ prec <- cdo.sellonlatbox(x=x,y=gadm)
+ 
+library(RColorBrewer)
+library(rasterVis)
+cols <- colorRampPalette(brewer.pal(9,"YlGnBu"))
+levelplot(prec[[5]],col.regions=cols)+layer(sp.polygons(gadm))
+levelplot(sum(prec),col.regions=cols)+layer(sp.polygons(gadm))
+
+
+### Africa Extent: extent      : -18.1625, 54.5375, -34.8375, 37.5625  (xmin, xmax, ymin, ymax)
+###y <- extent(c(-17.6608, -5.727799, 10.17488, 18.62197)) ## Extent senegal
+ y <- extent(c(-18.1625,54.5375,-34.8375,37.5625))
+
+ prec_afr <- cdo.sellonlatbox(x=x,y=y,dim=c(10,10),parallel=TRUE)	
+
+
+}
 }
 \author{
 Emanuele Cordano

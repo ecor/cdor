@@ -1,17 +1,26 @@
 #' R Interface for 'cdo.sellonlatbox' and 'cdo.distgrid'
 #' 
-#' @param x,y BLA BLA
+#' @param x input netcdf file for 'cdo.sellonlatbox' and the 'cdo.distgrid'
+#' @param y extent or \code{Extent*} object indicateing the extent to extract
+#' @param return.raster logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-class}} objects.
+#' @param dim integer vector reporting the number of rows and columuns of the matrix of tiles into which the cropped map is spit. 
+#' @param ... further arguments for \code{\link{cdo.sellonlatbox}}
 #' 
+#' @seealso \code{\link{cdo.sellonlatbox}}
+#' @importFrom raster 'extension<-'
 #' @export
 #' @examples 
 #' 
+#' 
+#' 
 #' \dontrun{
-#'
-#' 	ncname <- "chirps-v2.0.2005.days_p05.nc"
+#' 
+#'  ncname <- "chirps-v2.0.2005.days_p05.nc"
 #'  url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05"
-#'  temp <- rasterTmpFile()
-#'  download.file(from=paste(url,ncname,sep="/"),to=temp)
+#'  temp <- tempdir()
 #'  x <- paste(temp,ncname,sep="/")
+#'  download.file(url=paste(url,ncname,sep="/"),destfile=x)
+#' 
 #' 
 #' 
 #' 
@@ -46,7 +55,7 @@ cdo.distgrid <-function(x,y,...,dim=c(1,1),return.raster=TRUE)  {
 		
 		 dirf <- dirname(obase)
 		 pattern <- basename(obase)		
-		 out <- list.files(dirf,pattern=pattern,full.name=TRUE)	
+		 out <- list.files(dirf,pattern=pattern,full.names=TRUE)	
 		
 			if (return.raster==TRUE) {
 				

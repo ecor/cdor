@@ -8,12 +8,14 @@ NULL
 #' @param x input netcdf file for 'cdo.sellonlatbox'
 #' @param y extent or \code{Extent*} object indicateing the extent to extract
 #' @param outdir output directory
-#' @param return.raster logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-Class}} objects.
-#' 
-#' @param fine_nc fine  input netcdf
+#' @param return.raster logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-class}} objects.
 #' @param outfile output netcdf 
+#' @param ... further arguments
+#' @param dim integer vector reporting the number of rows and columuns of the matrix of tiles into which the cropped map is spit. 
+#' @param parallel logical value. If it is \code{TRUE} function works in a parallel way using \code{doParallel} package.  Default is \code{FALSE}.
+#' @param npar number of working cores (used if \code{parall==TRUE}). In case of \code{NA} (default) and \code{parallel==TRUE} function uses all but one cores of the CPU. See \code{detectCores}. 
 #' 
-#' @note This function calls \code{cdo remapnn}. 
+#' @note This function calls \code{cdo sellonlatbox}. 
 #' See \url{http://www.fourtythree.org/tech/remapping-a-netcdf-file-using-cdo/},
 #' \url{https://code.zmaw.de/projects/cdo/embedded/1.4.7/cdo.html}
 #' 
@@ -31,20 +33,19 @@ NULL
 #' 
 #' \dontrun{
 #'
-#' 	ncname <- "chirps-v2.0.2005.days_p05.nc"
+#'  ncname <- "chirps-v2.0.2005.days_p05.nc"
 #'  url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05"
-#'  temp <- rasterTmpFile()
-#'  download.file(from=paste(url,ncname,sep="/"),to=temp)
+#'  temp <- tempdir()
 #'  x <- paste(temp,ncname,sep="/")
+#'  download.file(url=paste(url,ncname,sep="/"),destfile=x)
 #' 
-#' 	DOWNLOAD.FILE
 #' 
+#' 	##### DOWNLOAD.FILE
 #' 
-#' 	library(raster)
-#' 
-#' 	out <- cdo.sellonlatbox(x=x,y=y)
-#' 	out2 <- cdo.sellonlatbox(x=x,y=y,dim=c(2,2))
-#' 	map_path <-  '/STORAGE/projects/R-Packages/cdor/inst/map'
+#'  ## Below it sets a temporary directory where to download the gadm map
+#' 	## Optionally map_path migth be set to a specific file system directory
+#' 	map_path <- temdir()   '
+#'  
 #'  gadm <- getData('GADM',country='ITA',level=3,path=map_path)
 #'  gadm <- gadm[gadm$NAME_1 %in% c("Trentino-Alto Adige"),]
 #'  prec <- cdo.sellonlatbox(x=x,y=gadm)
@@ -54,6 +55,9 @@ NULL
 #' cols <- colorRampPalette(brewer.pal(9,"YlGnBu"))
 #' levelplot(prec[[5]],col.regions=cols)+layer(sp.polygons(gadm))
 #' levelplot(sum(prec),col.regions=cols)+layer(sp.polygons(gadm))
+#' 
+#' 
+#' 
 #' 
 #' 
 #' ### Africa Extent: extent      : -18.1625, 54.5375, -34.8375, 37.5625  (xmin, xmax, ymin, ymax)
@@ -119,20 +123,20 @@ cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.r
 	  
 	  if (parallel==TRUE) {
 		  
-		  
+		 stopifnot(requireNamespace("doParallel"))
 		 ## require("doParallel")
 		 ## require("foreach")
-		  npar_max <- min(detectCores(all.tests = FALSE, logical = TRUE)-1,dim[1]*dim[2])
+		  npar_max <- min(try(parallel::detectCores(all.tests = FALSE, logical = TRUE)-1,silent=TRUE),dim[1]*dim[2])
 		  if (is.na(npar)) npar <- npar_max 
 		  if (npar>npar_max) npar <- npar_max 
 		  
-		 registerDoParallel(npar)
+		 try ( doParallel::registerDoParallel(npar), silent=TRUE)
 		  print(extents)
 		  ## SPERIMENTARE 
 		  iextents <- 1:length(extents)
 		  print(iextents)
 		 #######extentss <<- extents
-		  out <- foreach(ii=iextents) %dopar% {cdo.sellonlatbox(x=x,y=extents[[ii]],dim=1,outdir=outdir,return.raster=return.raster,parallel=FALSE,...)}
+		  out <- try( foreach::foreach(ii=iextents) %dopar% {cdo.sellonlatbox(x=x,y=extents[[ii]],dim=1,outdir=outdir,return.raster=return.raster,parallel=FALSE,...)},silent=TRUE)
 		  
 	  } else {
 	  		

@@ -1,16 +1,17 @@
 Package: cdor
 Maintainer: Emanuele Cordano <emanuele.cordano@gmail.com>
 License: GPL (>= 3)
-Title: A set of R functions to manipulate climate data in netCDF format
+Title: A Set of R Functions to Manipulate Climate Data in netCDF Format
 Type: Package
 Author: Emanuele Cordano
 Description: It manipulates netCDF climate data files with 'cdo' external tools
     and it interfaces with "raster" package for data import/export and analysis.
-Version: 0.3.1
-Date: 2018-08-03
+Version: 0.3.2
+Date: 2018-08-08
 Repository: Github
 Depends:
     raster,stringr
 Imports:
     rgdal
+Suggests: doParallel,rasterVis,RColorBrewer
 RoxygenNote: 5.0.1

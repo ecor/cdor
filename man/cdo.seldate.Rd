@@ -10,11 +10,15 @@ cdo.seldate(infile, outfile = NULL, start = "1997-05-01",
 \arguments{
 \item{infile}{input necdf file}
 
-\item{outfile}{}
+\item{outfile}{name of the outputfile}
 
 \item{start}{start date}
 
 \item{end}{end date}
+
+\item{return.raster}{logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-class}} objects.}
+
+\item{...}{further arguments}
 }
 \description{
 R Interface for 'cdo.seldate'
@@ -29,11 +33,16 @@ See \url{http://www.fourtythree.org/tech/remapping-a-netcdf-file-using-cdo/},
 
  \dontrun{
 
-	ncname <- "chirps-v2.0.2005.days_p05.nc"
+ ncname <- "chirps-v2.0.2005.days_p05.nc"
  url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05"
- temp <- rasterTmFile()
- download.file(from=paste(url,ncname,sep="/"),to=temp)
+ temp <- tempdir()
  x <- paste(temp,ncname,sep="/")
+ download.file(url=paste(url,ncname,sep="/"),destfile=x)
+
+
+
+
+
  infile <- x
  outfile <- NA
  

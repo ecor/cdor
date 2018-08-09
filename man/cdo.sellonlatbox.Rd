@@ -12,60 +12,27 @@ cdo.sellonlatbox(x, y, ..., dim = c(1, 1), outdir = NULL, outfile = NULL,
 
 \item{y}{extent or \code{Extent*} object indicateing the extent to extract}
 
+\item{...}{further arguments}
+
+\item{dim}{integer vector reporting the number of rows and columuns of the matrix of tiles into which the cropped map is spit.}
+
 \item{outdir}{output directory}
 
 \item{outfile}{output netcdf}
 
-\item{return.raster}{logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-Class}} objects.}
+\item{return.raster}{logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-class}} objects.}
 
-\item{fine_nc}{fine  input netcdf}
+\item{parallel}{logical value. If it is \code{TRUE} function works in a parallel way using \code{doParallel} package.  Default is \code{FALSE}.}
+
+\item{npar}{number of working cores (used if \code{parall==TRUE}). In case of \code{NA} (default) and \code{parallel==TRUE} function uses all but one cores of the CPU. See \code{detectCores}.}
 }
 \description{
 R Interface for 'cdo.sellonlatbox'
 }
 \note{
-This function calls \code{cdo remapnn}. 
+This function calls \code{cdo sellonlatbox}. 
 See \url{http://www.fourtythree.org/tech/remapping-a-netcdf-file-using-cdo/},
 \url{https://code.zmaw.de/projects/cdo/embedded/1.4.7/cdo.html}
-}
-\examples{
-
-
-\dontrun{
-
-	ncname <- "chirps-v2.0.2005.days_p05.nc"
- url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05"
- temp <- rasterTmFile()
- download.file(from=paste(url,ncname,sep="/"),to=temp)
- x <- paste(temp,ncname,sep="/")
-
-	DOWNLOAD.FILE
-
-
-	library(raster)
-
-	out <- cdo.sellonlatbox(x=x,y=y)
-	out2 <- cdo.sellonlatbox(x=x,y=y,dim=c(2,2))
-	map_path <-  '/STORAGE/projects/R-Packages/cdor/inst/map'
- gadm <- getData('GADM',country='ITA',level=3,path=map_path)
- gadm <- gadm[gadm$NAME_1 \%in\% c("Trentino-Alto Adige"),]
- prec <- cdo.sellonlatbox(x=x,y=gadm)
- 
-library(RColorBrewer)
-library(rasterVis)
-cols <- colorRampPalette(brewer.pal(9,"YlGnBu"))
-levelplot(prec[[5]],col.regions=cols)+layer(sp.polygons(gadm))
-levelplot(sum(prec),col.regions=cols)+layer(sp.polygons(gadm))
-
-
-### Africa Extent: extent      : -18.1625, 54.5375, -34.8375, 37.5625  (xmin, xmax, ymin, ymax)
-###y <- extent(c(-17.6608, -5.727799, 10.17488, 18.62197)) ## Extent senegal
- y <- extent(c(-18.1625,54.5375,-34.8375,37.5625))
-
- prec_afr <- cdo.sellonlatbox(x=x,y=y,dim=c(10,10),parallel=TRUE)	
-
-
-}
 }
 \author{
 Emanuele Cordano

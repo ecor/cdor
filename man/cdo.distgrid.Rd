@@ -7,20 +7,31 @@
 cdo.distgrid(x, y, ..., dim = c(1, 1), return.raster = TRUE)
 }
 \arguments{
-\item{x, y}{BLA BLA}
+\item{x}{input netcdf file for 'cdo.sellonlatbox' and the 'cdo.distgrid'}
+
+\item{y}{extent or \code{Extent*} object indicateing the extent to extract}
+
+\item{...}{further arguments for \code{\link{cdo.sellonlatbox}}}
+
+\item{dim}{integer vector reporting the number of rows and columuns of the matrix of tiles into which the cropped map is spit.}
+
+\item{return.raster}{logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-class}} objects.}
 }
 \description{
 R Interface for 'cdo.sellonlatbox' and 'cdo.distgrid'
 }
 \examples{
 
+
+
 \dontrun{
 
-	ncname <- "chirps-v2.0.2005.days_p05.nc"
+ ncname <- "chirps-v2.0.2005.days_p05.nc"
  url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05"
- temp <- rasterTmFile()
- download.file(from=paste(url,ncname,sep="/"),to=temp)
+ temp <- tempdir()
  x <- paste(temp,ncname,sep="/")
+ download.file(url=paste(url,ncname,sep="/"),destfile=x)
+
 
 
 
@@ -32,5 +43,8 @@ R Interface for 'cdo.sellonlatbox' and 'cdo.distgrid'
 
 
 }
+}
+\seealso{
+\code{\link{cdo.sellonlatbox}}
 }
 

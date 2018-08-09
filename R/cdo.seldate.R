@@ -8,9 +8,11 @@ NULL
 #' R Interface for 'cdo.seldate'
 #' 
 #' @param infile input necdf file
-#' @param outfile 
+#' @param outfile name of the outputfile 
 #' @param start start date
 #' @param end end date 
+#' @param return.raster logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-class}} objects.
+#' @param ... further arguments
 #' 
 #' @note This function calls \code{cdo seldate}. 
 #' See \url{http://www.fourtythree.org/tech/remapping-a-netcdf-file-using-cdo/},
@@ -24,11 +26,17 @@ NULL
 #' 
 #'  \dontrun{
 #' 
-#' 	ncname <- "chirps-v2.0.2005.days_p05.nc"
+
+#'  ncname <- "chirps-v2.0.2005.days_p05.nc"
 #'  url <- "ftp://ftp.chg.ucsb.edu/pub/org/chg/products/CHIRPS-2.0/global_daily/netcdf/p05"
-#'  temp <- rasterTmFile()
-#'  download.file(from=paste(url,ncname,sep="/"),to=temp)
+#'  temp <- tempdir()
 #'  x <- paste(temp,ncname,sep="/")
+#'  download.file(url=paste(url,ncname,sep="/"),destfile=x)
+#' 
+#' 
+#' 
+#' 
+#' 
 #'  infile <- x
 #'  outfile <- NA
 #'  
@@ -49,7 +57,7 @@ cdo.seldate <-function(infile,outfile=NULL,start="1997-05-01",end="1997-05-31",r
 	if  (outfile=="default")  {
 		formats <- "%Y_%m_%d"
 		starts <- as.character(start,format=formats)
-		starts <- as.character(end,format=formats)
+		ends <- as.character(end,format=formats)
 		suffix <- sprintf("_%s_%s.nc",starts,ends)
 		outfile <- str_replace(infile,".nc",suffix)
 		

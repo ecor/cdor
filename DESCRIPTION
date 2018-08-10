@@ -10,6 +10,6 @@ Version: 0.3.2
 Date: 2018-08-08
 Repository: Github
 Depends:
-    raster,stringr
+    raster,stringr,ncdf4
 Suggests: doParallel,rasterVis,RColorBrewer
 RoxygenNote: 5.0.1

@@ -25,7 +25,7 @@ NULL
 #' 
 #' @importFrom stringr str_replace str_replace_all
 #' @importFrom raster extent stack
-#' 
+#' @import ncdf4
 #' @export
 #' 
 #' @examples

@@ -150,11 +150,11 @@ cdo.sellonlatbox <-function(x,y,...,dim=c(1,1),outdir=NULL,outfile=NULL,return.r
 	yev <- y
 	
 	yc <- paste(yev,collapse=",")
-	names(yev) <- c("E","W","S","N")
+	names(yev) <- c("W","E","S","N")
 	
 	nn <- c("E","E","N","N")
-	nn[sign(yev)<0 && nn=="E"] <- "W"
-	nn[sign(yev)<0 && nn=="N"] <- "S"
+	nn[sign(yev)<0 & nn=="E"] <- "W"
+	nn[sign(yev)<0 & nn=="N"] <- "S"
 	###
 	ys <- paste(paste0(names(yev),abs(yev),nn),collapse="_")
 	ys <- str_replace_all(ys,"[.]","d")

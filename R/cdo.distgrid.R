@@ -43,7 +43,9 @@ cdo.distgrid <-function(x,y,...,dim=c(1,1),return.raster=TRUE)  {
 	
 	obase <- out
 	extension(obase) <- ""
-	obase <- paste0(obase,"_tile_")
+	
+	obase <- paste(obase,"tile",sprintf("nx%03d",dim[2]),sprintf("ny%03d",dim[1]),"",sep="_")
+
 	rdims <- paste(rev(dim),collapse=",") 
 	
 	cdostring <- sprintf('cdo distgrid,%s %s %s',rdims,infile,obase)

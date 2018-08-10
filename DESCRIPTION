@@ -11,7 +11,5 @@ Date: 2018-08-08
 Repository: Github
 Depends:
     raster,stringr
-Imports:
-    rgdal
 Suggests: doParallel,rasterVis,RColorBrewer
 RoxygenNote: 5.0.1

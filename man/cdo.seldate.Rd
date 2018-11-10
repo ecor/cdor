@@ -49,10 +49,9 @@ See \url{http://www.fourtythree.org/tech/remapping-a-netcdf-file-using-cdo/},
  ncs <- cdo.seldate(infile,outfile,start="1997-05-01",end="1997-05-31")
  }
 }
-\author{
-Emanuele Cordano
-}
 \seealso{
 \code{\link{system}}
 }
-
+\author{
+Emanuele Cordano
+}

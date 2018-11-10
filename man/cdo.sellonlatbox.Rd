@@ -4,8 +4,9 @@
 \alias{cdo.sellonlatbox}
 \title{R Interface for 'cdo.sellonlatbox'}
 \usage{
-cdo.sellonlatbox(x, y, ..., dim = c(1, 1), outdir = NULL, outfile = NULL,
-  return.raster = TRUE, parallel = FALSE, npar = NA)
+cdo.sellonlatbox(x, y, ..., dim = c(1, 1), outdir = NULL,
+  outfile = NULL, return.raster = TRUE, parallel = FALSE,
+  npar = NA)
 }
 \arguments{
 \item{x}{input netcdf file for 'cdo.sellonlatbox'}
@@ -34,10 +35,9 @@ This function calls \code{cdo sellonlatbox}.
 See \url{http://www.fourtythree.org/tech/remapping-a-netcdf-file-using-cdo/},
 \url{https://code.zmaw.de/projects/cdo/embedded/1.4.7/cdo.html}
 }
-\author{
-Emanuele Cordano
-}
 \seealso{
 \code{\link{system}}
 }
-
+\author{
+Emanuele Cordano
+}

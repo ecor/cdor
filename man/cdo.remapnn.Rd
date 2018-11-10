@@ -21,10 +21,9 @@ This function calls \code{cdo remapnn}.
 See \url{http://www.fourtythree.org/tech/remapping-a-netcdf-file-using-cdo/},
 \url{https://code.zmaw.de/projects/cdo/embedded/1.4.7/cdo.html}
 }
-\author{
-Emanuele Cordano
-}
 \seealso{
 \code{\link{system}}
 }
-
+\author{
+Emanuele Cordano
+}

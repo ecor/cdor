@@ -1,7 +1,8 @@
 #' R Interface for 'cdo.sellonlatbox' and 'cdo.distgrid'
 #' 
 #' @param x input netcdf file for 'cdo.sellonlatbox' and the 'cdo.distgrid'
-#' @param y extent or \code{Extent*} object indicateing the extent to extract
+#' @param y extent or \code{Extent*} object indicateing the extent to extract or \code{NULL}(dafault). It works with \code{sellonlatbox==TRUE}.
+#' @param sellonlatbox logical value. if it is \code{TRUE} (default) , \code{x} is cropped through \code{\link{cdo.sellonlatbox}} 
 #' @param return.raster logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-class}} objects.
 #' @param dim integer vector reporting the number of rows and columuns of the matrix of tiles into which the cropped map is spit. 
 #' @param ... further arguments for \code{\link{cdo.sellonlatbox}}
@@ -33,11 +34,18 @@
 #' 
 #' }
 
-cdo.distgrid <-function(x,y,...,dim=c(1,1),return.raster=TRUE)  {
+cdo.distgrid <-function(x,y=NULL,...,dim=c(1,1),sellonlatbox=TRUE,return.raster=TRUE)  {
 	
+	if (is.null(y)) sellonlatbox <- FALSE
 	
-	
-	out <- cdo.sellonlatbox(x,y,...,dim=c(1,1),return.raster=FALSE)
+	if (sellonlatbox==TRUE) { 
+		
+		out <- cdo.sellonlatbox(x,y,...,dim=c(1,1),return.raster=FALSE)
+		
+	} else {
+		
+		out <- x
+	}	
 	
 	infile <- out
 	

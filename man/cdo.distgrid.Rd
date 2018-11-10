@@ -4,16 +4,19 @@
 \alias{cdo.distgrid}
 \title{R Interface for 'cdo.sellonlatbox' and 'cdo.distgrid'}
 \usage{
-cdo.distgrid(x, y, ..., dim = c(1, 1), return.raster = TRUE)
+cdo.distgrid(x, y = NULL, ..., dim = c(1, 1), sellonlatbox = TRUE,
+  return.raster = TRUE)
 }
 \arguments{
 \item{x}{input netcdf file for 'cdo.sellonlatbox' and the 'cdo.distgrid'}
 
-\item{y}{extent or \code{Extent*} object indicateing the extent to extract}
+\item{y}{extent or \code{Extent*} object indicateing the extent to extract or \code{NULL}(dafault). It works with \code{sellonlatbox==TRUE}.}
 
 \item{...}{further arguments for \code{\link{cdo.sellonlatbox}}}
 
 \item{dim}{integer vector reporting the number of rows and columuns of the matrix of tiles into which the cropped map is spit.}
+
+\item{sellonlatbox}{logical value. if it is \code{TRUE} (default) , \code{x} is cropped through \code{\link{cdo.sellonlatbox}}}
 
 \item{return.raster}{logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-class}} objects.}
 }
@@ -47,4 +50,3 @@ R Interface for 'cdo.sellonlatbox' and 'cdo.distgrid'
 \seealso{
 \code{\link{cdo.sellonlatbox}}
 }
-

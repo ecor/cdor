@@ -4,8 +4,8 @@
 \alias{cdo.distgrid}
 \title{R Interface for 'cdo.sellonlatbox' and 'cdo.distgrid'}
 \usage{
-cdo.distgrid(x, y = NULL, ..., dim = c(1, 1), sellonlatbox = TRUE,
-  return.raster = TRUE)
+cdo.distgrid(x, y = NULL, ..., outdir = NULL, outfile = NULL,
+  dim = c(1, 1), sellonlatbox = TRUE, return.raster = TRUE)
 }
 \arguments{
 \item{x}{input netcdf file for 'cdo.sellonlatbox' and the 'cdo.distgrid'}
@@ -13,6 +13,8 @@ cdo.distgrid(x, y = NULL, ..., dim = c(1, 1), sellonlatbox = TRUE,
 \item{y}{extent or \code{Extent*} object indicateing the extent to extract or \code{NULL}(dafault). It works with \code{sellonlatbox==TRUE}.}
 
 \item{...}{further arguments for \code{\link{cdo.sellonlatbox}}}
+
+\item{outdir, outfile}{output directory and/or output file}
 
 \item{dim}{integer vector reporting the number of rows and columuns of the matrix of tiles into which the cropped map is spit.}
 

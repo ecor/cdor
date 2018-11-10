@@ -3,6 +3,7 @@
 #' @param x input netcdf file for 'cdo.sellonlatbox' and the 'cdo.distgrid'
 #' @param y extent or \code{Extent*} object indicateing the extent to extract or \code{NULL}(dafault). It works with \code{sellonlatbox==TRUE}.
 #' @param sellonlatbox logical value. if it is \code{TRUE} (default) , \code{x} is cropped through \code{\link{cdo.sellonlatbox}} 
+#' @param outdir,outfile output directory and/or output file
 #' @param return.raster logical value. If is \code{TRUE}, outputs are returned as \code{\link{RasterStack-class}} objects.
 #' @param dim integer vector reporting the number of rows and columuns of the matrix of tiles into which the cropped map is spit. 
 #' @param ... further arguments for \code{\link{cdo.sellonlatbox}}
@@ -34,22 +35,40 @@
 #' 
 #' }
 
-cdo.distgrid <-function(x,y=NULL,...,dim=c(1,1),sellonlatbox=TRUE,return.raster=TRUE)  {
+cdo.distgrid <-function(x,y=NULL,...,outdir=NULL,outfile=NULL,dim=c(1,1),sellonlatbox=TRUE,return.raster=TRUE)  {
 	
 	if (is.null(y)) sellonlatbox <- FALSE
 	
 	if (sellonlatbox==TRUE) { 
 		
-		out <- cdo.sellonlatbox(x,y,...,dim=c(1,1),return.raster=FALSE)
-		
+		out <- cdo.sellonlatbox(x,y,...,outdir=outdir,outfile=outfile,dim=c(1,1),return.raster=FALSE)
+		obase <- out
 	} else {
 		
+		if (is.null(outfile)) outfile <- NA
+		if (is.na(outfile)) outfile <- "default"
+		if (is.null(outdir)) outdir <- NA
+		if (is.na(outdir)) outdir <- "default"
+		
+		if (outdir=="default") outdir <- tempdir()
+		if (outfile=="default") {
+			
+			outfile <- basename(x)
+			outfile <- paste(outdir,outfile,sep="/")
+			#suffix <- paste0("__",ys,".nc")
+			#outfile <- str_replace(basename(x),".nc",suffix)
+			#if (outdir!="")  outfile <- paste(outdir,outfile,sep="/")
+			
+			
+			
+		}
 		out <- x
+		obase <- outfile
 	}	
 	
 	infile <- out
 	
-	obase <- out
+	###obase <- out
 	extension(obase) <- ""
 	
 	obase <- paste(obase,"tile",sprintf("nx%03d",dim[2]),sprintf("ny%03d",dim[1]),"",sep="_")
